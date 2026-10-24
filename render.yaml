@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: repropack-demo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    envVars:
+      - key: REPROPACK_DEMO
+        value: "1"
+      - key: REPROPACK_DATA_DIR
+        value: ""
+      - key: REPROPACK_PLATFORM
+        value: render
+      - key: NODE_ENV
+        value: production

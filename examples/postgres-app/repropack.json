@@ -1,0 +1,15 @@
+{
+  "id": "postgres-cart",
+  "module": "./app.ts",
+  "fixedModule": "./fixed.ts",
+  "schema": "./schema.sql",
+  "seed": "./seed.sql",
+  "snapshot": {
+    "id": "cart-case",
+    "tables": ["public.customers", "public.products", "public.carts", "public.cart_items"],
+    "roots": [{ "table": "public.carts", "where": { "id": 42 } }],
+    "childrenOf": ["public.carts"],
+    "maxRows": 50,
+    "redact": [{ "table": "public.customers", "column": "email", "kind": "email" }]
+  }
+}

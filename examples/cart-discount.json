@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "adapter": "demo-cart",
+  "title": "Coupon disappears after quantity change",
+  "description": "A customer applies SAVE20, then changes the coffee quantity. The coupon stays on the cart, but the total becomes $100 instead of $80. Noise requests are included to exercise reduction.",
+  "steps": [
+    { "id": "health", "method": "GET", "path": "/health" },
+    { "id": "browse-catalog", "method": "GET", "path": "/catalog" },
+    { "id": "create-cart", "method": "POST", "path": "/cart", "expectStatus": 201 },
+    { "id": "health-after-create", "method": "GET", "path": "/health" },
+    { "id": "browse-again", "method": "GET", "path": "/catalog" },
+    { "id": "add-coffee", "method": "POST", "path": "/cart/items", "body": { "sku": "coffee", "quantity": 1 }, "expectStatus": 201 },
+    { "id": "inspect-cart", "method": "GET", "path": "/cart" },
+    { "id": "load-preferences", "method": "GET", "path": "/preferences" },
+    { "id": "apply-coupon", "method": "POST", "path": "/cart/coupon", "body": { "code": "SAVE20" } },
+    { "id": "health-after-coupon", "method": "GET", "path": "/health" },
+    { "id": "refresh-catalog", "method": "GET", "path": "/catalog" },
+    { "id": "change-quantity", "method": "PATCH", "path": "/cart/items/coffee", "body": { "quantity": 2 } },
+    { "id": "preferences-again", "method": "GET", "path": "/preferences" },
+    { "id": "inspect-total", "method": "GET", "path": "/cart" },
+    { "id": "health-before-checkout", "method": "GET", "path": "/health" },
+    { "id": "checkout", "method": "GET", "path": "/cart/checkout" }
+  ],
+  "oracle": {
+    "stepId": "checkout",
+    "status": 200,
+    "failure": { "/coupon": "SAVE20", "/total": 100 },
+    "success": { "/coupon": "SAVE20", "/total": 80 }
+  }
+}

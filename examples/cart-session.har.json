@@ -1,0 +1,12 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": { "name": "ReproPack synthetic example", "version": "1" },
+    "entries": [
+      { "request": { "method": "GET", "url": "http://127.0.0.1:9000/health", "headers": [] }, "response": { "status": 200, "content": { "mimeType": "application/json" } } },
+      { "request": { "method": "POST", "url": "http://127.0.0.1:9000/cart/coupon", "headers": [{ "name": "Authorization", "value": "Bearer example-only-not-a-real-secret" }], "postData": { "mimeType": "application/json", "text": "{\"code\":\"SAVE20\",\"password\":\"example-only\"}" } }, "response": { "status": 200, "content": { "mimeType": "application/json" } } },
+      { "request": { "method": "PATCH", "url": "http://127.0.0.1:9000/cart/items/coffee?access_token=example-only", "headers": [], "postData": { "mimeType": "application/json", "text": "{\"quantity\":2}" } }, "response": { "status": 200, "content": { "mimeType": "application/json" } } },
+      { "request": { "method": "GET", "url": "http://127.0.0.1:9000/cart/checkout", "headers": [] }, "response": { "status": 200, "content": { "mimeType": "application/json", "text": "{\"coupon\":\"SAVE20\",\"total\":100}" } } }
+    ]
+  }
+}

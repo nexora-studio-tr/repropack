@@ -1,0 +1,14 @@
+# Build explicitly: docker build -f Dockerfile.sandbox -t repropack-sandbox:local .
+# Execution resolves and requires the resulting immutable local image ID; it never pulls.
+FROM node:24.15.0-bookworm-slim
+WORKDIR /opt/repropack
+ENV NODE_ENV=production
+RUN groupadd --gid 10001 repropack && useradd --uid 10001 --gid 10001 --no-create-home repropack
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+COPY src ./src
+COPY examples/postgres-app ./examples/postgres-app
+COPY examples/sandbox-probe ./examples/sandbox-probe
+RUN printf 'repropack-v1\n' > .sandbox-runtime
+USER 10001:10001
+ENTRYPOINT ["node", "/opt/repropack/src/sandbox/trial.ts"]

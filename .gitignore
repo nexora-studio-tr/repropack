@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.repropack/
+artifacts/
+*.sqlite*
+.env
+.env.*
+!.env.example
+coverage/

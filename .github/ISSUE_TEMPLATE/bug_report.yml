@@ -1,0 +1,26 @@
+name: Bug report / Hata bildirimi
+description: Report a reproducible problem without private data.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened? / Ne oldu?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Synthetic reproduction steps / Sentetik tekrar adımları
+      description: Do not attach credentials, raw HAR files, source database rows or private capsules.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Version, OS and runtime / Sürüm, işletim sistemi ve çalışma ortamı
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / Beklenen davranış

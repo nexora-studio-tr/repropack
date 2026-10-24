@@ -1,0 +1,25 @@
+name: repropack-demo
+services:
+  demo:
+    build: .
+    image: repropack:0.6.0-alpha.1
+    labels:
+      io.repropack.deployment-owner: ${REPROPACK_DEPLOYMENT_OWNER:-operator}
+    init: true
+    ports:
+      - "127.0.0.1:${REPROPACK_DEMO_PORT:-4320}:4320"
+    environment:
+      PORT: "4320"
+      REPROPACK_DEMO: "1"
+      REPROPACK_DATA_DIR: ""
+      REPROPACK_PUBLIC_ORIGIN: ${REPROPACK_PUBLIC_ORIGIN:-}
+    read_only: true
+    tmpfs:
+      - /tmp:size=268435456,mode=1777,nosuid,nodev,noexec
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 1
+    stop_grace_period: 15s
+    restart: unless-stopped

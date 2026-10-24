@@ -1,0 +1,36 @@
+name: Pilot feedback / Deneme geri bildirimi
+description: Help validate debugging usefulness with no automatic telemetry.
+body:
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Did this help debug your problem? / Sorunu çözmene yardımcı oldu mu?
+      options:
+        - Yes / Evet
+        - Partly / Kısmen
+        - No / Hayır
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Minutes to first verified reduction / İlk doğrulanmış küçültmeye kadar dakika
+  - type: input
+    id: size
+    attributes:
+      label: Original and retained step counts / İlk ve kalan adım sayısı
+  - type: textarea
+    id: friction
+    attributes:
+      label: Biggest obstacle / En büyük engel
+      description: Leave out secrets and private input data.
+    validations:
+      required: true
+  - type: dropdown
+    id: reuse
+    attributes:
+      label: Would you use it for another failure? / Başka bir hata için kullanır mısın?
+      options:
+        - Yes / Evet
+        - With changes / Değişikliklerle
+        - No / Hayır

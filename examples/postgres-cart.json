@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "adapter": "node-http-postgres",
+  "application": "postgres-cart",
+  "snapshot": "cart-case",
+  "title": "PostgreSQL cart: coupon lost after quantity change",
+  "description": "A separate Node.js application runs against a fresh PostgreSQL clone in every trial. The selected cart snapshot contains its customer, item and product; unrelated customers are excluded and the selected email is masked.",
+  "steps": [
+    { "id": "health", "method": "GET", "path": "/health" },
+    { "id": "catalog", "method": "GET", "path": "/catalog" },
+    { "id": "create-cart", "method": "POST", "path": "/cart", "expectStatus": 201 },
+    { "id": "browse-again", "method": "GET", "path": "/catalog" },
+    { "id": "add-coffee", "method": "POST", "path": "/cart/items", "body": { "sku": "coffee", "quantity": 1 }, "expectStatus": 201 },
+    { "id": "view-cart", "method": "GET", "path": "/cart" },
+    { "id": "apply-coupon", "method": "POST", "path": "/cart/coupon", "body": { "code": "SAVE20" } },
+    { "id": "preferences", "method": "GET", "path": "/preferences" },
+    { "id": "health-again", "method": "GET", "path": "/health" },
+    { "id": "change-quantity", "method": "PATCH", "path": "/cart/items/coffee", "body": { "quantity": 2 } },
+    { "id": "inspect-total", "method": "GET", "path": "/cart" },
+    { "id": "checkout", "method": "GET", "path": "/cart/checkout" }
+  ],
+  "oracle": {
+    "stepId": "checkout",
+    "status": 200,
+    "failure": { "/coupon": "SAVE20", "/total": 100 },
+    "success": { "/coupon": "SAVE20", "/total": 80 }
+  }
+}

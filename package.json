@@ -1,0 +1,49 @@
+{
+  "name": "repropack",
+  "version": "0.6.0-alpha.1",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Failure-preserving HTTP scenario reduction with reproducible evidence.",
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node src/server.ts",
+    "dev": "node scripts/build.mjs && node src/server.ts",
+    "demo": "node src/cli.ts demo",
+    "demo:postgres": "node src/cli.ts postgres-demo",
+    "test": "node --test --test-concurrency=1 test/*.test.ts",
+    "test:browser": "node scripts/browser-smoke.mjs && node scripts/identity-browser-smoke.mjs && node scripts/demo-browser-smoke.mjs && node scripts/security-browser-smoke.mjs",
+    "test:sandbox": "node scripts/sandbox-smoke.mjs",
+    "validate:sandbox": "node scripts/validate-sandbox.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test && npm run build",
+    "demo:web": "node scripts/build.mjs && node scripts/start-demo.mjs",
+    "backup": "node scripts/backup.mjs",
+    "release:package": "node scripts/package-release.mjs",
+    "demo:share": "node scripts/share-demo.mjs start",
+    "validate:deployment": "node scripts/validate-deployment.mjs",
+    "image:build": "node scripts/build-image.mjs",
+    "release:check": "node scripts/release-check.mjs",
+    "release:prepare": "node scripts/prepare-github.mjs"
+  },
+  "dependencies": {
+    "embedded-postgres": "18.4.0-beta.17",
+    "nodemailer": "10.2.1",
+    "pg": "8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "@types/nodemailer": "8.0.2",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.64.1",
+    "typescript": "7.0.2"
+  }
+}
