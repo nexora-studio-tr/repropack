@@ -1,5 +1,7 @@
 # ReproPack
 
+[![CI](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml)
+
 Ücretsiz, MIT lisanslı açık kaynak alfa. Yerel kurulumda güvenilir uygulama kodu kullanılır; genel demo geçici ve sentetiktir. Ödeme, abonelik ve otomatik telemetri içermez.
 
 ## Hesap kurtarma ve yayın kontrolleri — alfa 0.6

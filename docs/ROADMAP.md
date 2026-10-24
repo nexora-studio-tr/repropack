@@ -14,9 +14,11 @@ The project is an independent ReproPack product. A general-purpose Claude Code/C
 | 4 | Secure user/team management, server-enforced roles, tenant isolation, audit trail | Locally validated in alpha 0.4 |
 | 4 | Installable self-hosted release and restricted public demo | Alpha 0.5 implemented; temporary HTTPS preview supported, permanent managed deployment pending |
 | 5 | Optional email verification/recovery, EN/TR UI, release preflight and pinned CI | Alpha 0.6 implemented; local and remote evidence recorded separately |
-| 5 | Free open-source publication and community pilot | Publication in progress; no completed external user pilot |
+| 5 | Free open-source publication and community pilot | Public GitHub source and all five remote CI jobs verified; external user pilot pending |
 
 The current target is a free MIT-licensed open-source alpha with team security and a restricted synthetic demo. Billing and subscriptions are outside this release's scope. A production traffic recorder and hostile-code hosting service are not supplied. Public publication, remote CI and managed-demo deployment must each be verified independently; configuration alone is not evidence of deployment.
+
+Published repository: [shadow2028-blip/repropack](https://github.com/shadow2028-blip/repropack). The [verified five-job remote CI run](https://github.com/shadow2028-blip/repropack/actions/runs/40130055675) covers Windows/Linux, browsers, Docker isolation and deployment. The Windows runner uses a verified non-administrative token because PostgreSQL refuses administrative execution. Private vulnerability reporting, dependency alerts and secret push protection are enabled. Managed Render hosting still requires an operator account; no live provider email delivery or independent user pilot is claimed.
 
 ## Stage 1 validation / Birinci aşama kaydı — 2026-10-24
 

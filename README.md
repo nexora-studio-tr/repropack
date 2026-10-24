@@ -2,6 +2,8 @@
 
 **Less noise. Same failure.** Reduce a reproducible HTTP scenario while preserving its exact failure signature.
 
+[![CI](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml)
+
 [Türkçe](README.tr.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Roadmap / status](docs/ROADMAP.md)
 
 Free, MIT-licensed open source. **Alpha: install locally with trusted application code.** The public demo is a disposable synthetic example. No billing, subscriptions or automatic telemetry.
@@ -24,7 +26,7 @@ The private workbench requires sign-in. First setup uses the private `.repropack
 
 ## Isolation and recovery — alpha 0.3
 
-An explicit Docker execution mode, hard workload quotas, ownership journals and independent cleanup supervisors are included. Native Windows crash recovery and the **real Linux Docker gate on Windows/WSL 2** pass, including kernel OOM/PID limits, external-network exclusion and parent-crash cleanup. Default native execution still requires trusted code. See [setup, limits and validation evidence / Türkçe](docs/SANDBOX.md). Remote GitHub CI and permanent managed deployment have not been performed; alpha 0.5 adds a separate disposable public preview.
+An explicit Docker execution mode, hard workload quotas, ownership journals and independent cleanup supervisors are included. Native Windows crash recovery and the **real Linux Docker gate on Windows/WSL 2** pass, including kernel OOM/PID limits, external-network exclusion and parent-crash cleanup. Default native execution still requires trusted code. See [setup, limits and validation evidence / Türkçe](docs/SANDBOX.md). GitHub Actions validates Windows/Linux, browser flows, Docker isolation and deployment. Permanent managed hosting remains optional; alpha 0.5 includes a separate disposable public preview.
 
 ## PostgreSQL applications — alpha 0.2
 
