@@ -23,7 +23,10 @@ jobs:
           node-version: 24.15.0
           cache: npm
       - run: npm ci
-      - run: npm run check
+      - if: runner.os != 'Windows'
+        run: npm run check
+      - if: runner.os == 'Windows'
+        run: node scripts/windows-ci.mjs
       - run: npm run release:check
       - run: npm audit --audit-level=moderate
       - run: npm run demo
