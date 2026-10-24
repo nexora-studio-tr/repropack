@@ -8,6 +8,10 @@
 
 Free, MIT-licensed open source. **Alpha: install locally with trusted application code.** The public demo is a disposable synthetic example. No billing, subscriptions or automatic telemetry.
 
+**[Try the live demo →](https://repropack-demo-4rq9.onrender.com/)** · No sign-up · Synthetic data only.
+
+The free instance can sleep when idle, so the first load may take about a minute. Demo workspaces expire after 60 minutes and reset on service restarts.
+
 ## Account recovery and release controls — alpha 0.6
 
 Optional SMTP email verification and password recovery use expiring, hashed one-use links, bounded delivery, account isolation and full session revocation. English/Turkish screens and HTTP/SMTP/browser checks cover the complete flow. See [configuration and guarantees](docs/ACCOUNT-SECURITY.md).

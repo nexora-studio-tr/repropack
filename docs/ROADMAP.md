@@ -12,13 +12,13 @@ The project is an independent ReproPack product. A general-purpose Claude Code/C
 | 3 | Explicit Docker isolation/quotas, fail-closed policy, ownership recovery | Real Linux Docker gate passed locally on Windows/WSL 2 |
 | 3 | Native workbench hard-kill and startup-crash cleanup | Locally validated on Windows |
 | 4 | Secure user/team management, server-enforced roles, tenant isolation, audit trail | Locally validated in alpha 0.4 |
-| 4 | Installable self-hosted release and restricted public demo | Alpha 0.5 implemented; temporary HTTPS preview supported, permanent managed deployment pending |
+| 4 | Installable self-hosted release and restricted public demo | Private release and restricted HTTPS demo deployed on Render Free; temporary previews also supported |
 | 5 | Optional email verification/recovery, EN/TR UI, release preflight and pinned CI | Alpha 0.6 implemented; local and remote evidence recorded separately |
 | 5 | Free open-source publication and community pilot | Public GitHub source and all five remote CI jobs verified; external user pilot pending |
 
 The current target is a free MIT-licensed open-source alpha with team security and a restricted synthetic demo. Billing and subscriptions are outside this release's scope. A production traffic recorder and hostile-code hosting service are not supplied. Public publication, remote CI and managed-demo deployment must each be verified independently; configuration alone is not evidence of deployment.
 
-Published repository: [shadow2028-blip/repropack](https://github.com/shadow2028-blip/repropack). The [verified five-job remote CI run](https://github.com/shadow2028-blip/repropack/actions/runs/40130055675) covers Windows/Linux, browsers, Docker isolation and deployment. The Windows runner uses a verified non-administrative token because PostgreSQL refuses administrative execution. Private vulnerability reporting, dependency alerts and secret push protection are enabled. Managed Render hosting still requires an operator account; no live provider email delivery or independent user pilot is claimed.
+Published repository: [shadow2028-blip/repropack](https://github.com/shadow2028-blip/repropack). The [verified five-job remote CI run](https://github.com/shadow2028-blip/repropack/actions/runs/40130973117) covers Windows/Linux, browsers, Docker isolation and deployment. The Windows runner uses a verified non-administrative token because PostgreSQL refuses administrative execution. Private vulnerability reporting, dependency alerts and secret push protection are enabled. The [restricted live demo](https://repropack-demo-4rq9.onrender.com/) is deployed on Render Free. Public HTTPS validation covers 12 checks, including real 16 → 5 reduction, three fresh fix trials, exports and visitor isolation. No live provider email delivery or independent user pilot is claimed.
 
 ## Stage 1 validation / Birinci aşama kaydı — 2026-10-24
 

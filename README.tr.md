@@ -4,6 +4,10 @@
 
 Ücretsiz, MIT lisanslı açık kaynak alfa. Yerel kurulumda güvenilir uygulama kodu kullanılır; genel demo geçici ve sentetiktir. Ödeme, abonelik ve otomatik telemetri içermez.
 
+**[Canlı demoyu aç →](https://repropack-demo-4rq9.onrender.com/)** · Kayıt gerektirmez · Yalnızca örnek veri.
+
+Ücretsiz sunucu boşta kaldığında uyuyabilir; ilk açılış yaklaşık bir dakika sürebilir. Demo çalışma alanları 60 dakika sonra ve servis yeniden başladığında sıfırlanır.
+
 ## Hesap kurtarma ve yayın kontrolleri — alfa 0.6
 
 İsteğe bağlı SMTP e-posta doğrulaması ve parola kurtarma eklendi. Bağlantılar süreli ve tek kullanımlıktır; anahtarların yalnızca özeti saklanır. Sıfırlama bütün oturumları kapatır. [Kurulum ve güvenlik sınırları](docs/ACCOUNT-SECURITY.md).

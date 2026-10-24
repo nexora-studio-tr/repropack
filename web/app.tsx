@@ -177,7 +177,7 @@ function Workbench({ session, language, setLanguage, onReady }: { session: Sessi
           <span className="history-bottom">{item.originalSteps}{item.reducedSteps !== null ? ` → ${item.reducedSteps}` : ''} · {new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-GB', { hour: '2-digit', minute: '2-digit' }).format(new Date(item.createdAt))}</span>
         </button>) : <p className="empty-history">{t.noHistory}</p>}
       </nav>
-      <div className="sidebar-footer"><span className="local-dot" /> {session.demo ? 'SAMPLE WORKSPACE' : 'LOCAL ENGINE'}<span className="local-description">{session.demo ? (language === 'tr' ? 'Geçici örnek veri. Diğer ziyaretçilerden ayrı.' : 'Temporary sample data. Separate from other visitors.') : t.localNote}</span><code>v0.5.0-alpha.1</code></div>
+      <div className="sidebar-footer"><span className="local-dot" /> {session.demo ? 'SAMPLE WORKSPACE' : 'LOCAL ENGINE'}<span className="local-description">{session.demo ? (language === 'tr' ? 'Geçici örnek veri. Diğer ziyaretçilerden ayrı.' : 'Temporary sample data. Separate from other visitors.') : t.localNote}</span><code>v{__REPROPACK_VERSION__}</code></div>
     </aside>
     <main id="main" className="main">
       <header className="topbar"><span>{t.workspace}</span><div className="topbar-right"><span className="alpha-label">{session.demo ? "DEMO" : t.local}</span><div className="language" aria-label="Language">{(['en', 'tr'] as const).map(lang => <button key={lang} aria-pressed={language === lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div></div></header>
