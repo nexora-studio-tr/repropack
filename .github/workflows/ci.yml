@@ -29,7 +29,8 @@ jobs:
         run: node scripts/windows-ci.mjs
       - run: npm run release:check
       - run: npm audit --audit-level=moderate
-      - run: npm run demo
+      - if: runner.os != 'Windows'
+        run: npm run demo
   browser:
     runs-on: ubuntu-latest
     steps:

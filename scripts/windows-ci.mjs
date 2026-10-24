@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { mkdtemp, mkdir, realpath, readFile, writeFile, rm } from 'node:fs/promises';
-import { openSync, closeSync } from 'node:fs';
+import { openSync, closeSync, writeSync } from 'node:fs';
 import { join, dirname, basename, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
@@ -24,9 +24,13 @@ if (process.argv[2] === '--child') {
     const probe = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', '$p = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent()); if ($p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) { exit 1 }'], { windowsHide: true, encoding: 'utf8', timeout: 15_000 });
     if (probe.error || probe.status !== 0) throw new Error('Restricted Windows CI child is still elevated or could not verify its identity');
     restricted = true; await mkdir(join(directory, 'tmp'));
-    const result = spawnSync(process.execPath, [join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js'), 'run', 'check'], { cwd: root, windowsHide: true, stdio: ['ignore', log, log], timeout: 600_000, env: { ...process.env, TEMP: join(directory, 'tmp'), TMP: join(directory, 'tmp') } });
-    if (result.error) throw result.error;
-    code = result.status ?? 1;
+    for (const args of [['run', 'check'], ['run', 'demo', '--', '--out', join(directory, 'cli-demo')]]) {
+      writeSync(log, '\nWindows CI (non-administrative): npm ' + args.slice(0, 2).join(' ') + '\n');
+      const result = spawnSync(process.execPath, [join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js'), ...args], { cwd: root, windowsHide: true, stdio: ['ignore', log, log], timeout: args[1] === 'check' ? 540_000 : 120_000, env: { ...process.env, TEMP: join(directory, 'tmp'), TMP: join(directory, 'tmp') } });
+      if (result.error) throw result.error;
+      code = result.status ?? 1;
+      if (code !== 0) { writeSync(log, '\nCommand failed with exit code ' + code + ', signal ' + result.signal + '\n'); break; }
+    }
   } catch (error) { console.error(error.message); }
   finally { closeSync(log); await writeFile(join(directory, 'result.json'), JSON.stringify({ owner, code, restricted }), { flag: 'wx' }); }
   process.exitCode = code;
@@ -39,7 +43,7 @@ if (process.argv[2] === '--child') {
     const command = '"' + process.execPath + '" "' + fileURLToPath(import.meta.url) + '" --child "' + directory + '" ' + owner;
     const launched = spawnSync(runas, ['/trustlevel:0x20000', command], { encoding: 'utf8', windowsHide: true, timeout: 15_000, stdio: ['ignore', 'pipe', 'pipe'] });
     if (launched.error || launched.status !== 0 || /RUNAS ERROR/iu.test(launched.stdout + launched.stderr)) throw new Error('Could not launch non-administrative Windows CI checks');
-    const deadline = Date.now() + 660_000;
+    const deadline = Date.now() + 720_000;
     let result;
     while (Date.now() < deadline) {
       try { result = JSON.parse(await readFile(join(directory, 'result.json'), 'utf8')); break; }
