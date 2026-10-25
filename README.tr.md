@@ -1,6 +1,6 @@
 # ReproPack
 
-[![CI](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml)
+[![CI](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml)
 
 Ücretsiz, MIT lisanslı açık kaynak alfa. Yerel kurulumda güvenilir uygulama kodu kullanılır; genel demo geçici ve sentetiktir. Ödeme, abonelik ve otomatik telemetri içermez.
 
@@ -14,7 +14,7 @@
 
 `npm run release:check` yalnızca yayınlanacak kaynakları denetler. CI eylemleri tam commit kimliğine sabitlenmiştir; etiket yayını CI kontrollerini geçmeden sürüm arşivi yayımlamaz. [Gönüllü pilot yönergesi](docs/PILOT.md) ve GitHub geri bildirim formları hazırdır; bağımsız güvenlik denetimi veya gerçek kullanıcı pilotu yapılmış sayılmaz.
 
-[Ücretsiz geçici demo kur](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fshadow2028-blip%2Frepropack) · [Yerel kurulum](docs/DEPLOY.md)
+[Ücretsiz geçici demo kur](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fnexora-studio-tr%2Frepropack) · [Yerel kurulum](docs/DEPLOY.md)
 
 **Daha az gürültü. Aynı hata.** Tekrarlanabilir bir HTTP senaryosunu, aynı hatayı koruyarak küçültür.
 

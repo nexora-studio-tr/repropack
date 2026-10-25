@@ -2,7 +2,7 @@
 
 **Less noise. Same failure.** Reduce a reproducible HTTP scenario while preserving its exact failure signature.
 
-[![CI](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/shadow2028-blip/repropack/actions/workflows/ci.yml)
+[![CI](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml)
 
 [Türkçe](README.tr.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Roadmap / status](docs/ROADMAP.md)
 
@@ -18,7 +18,7 @@ Optional SMTP email verification and password recovery use expiring, hashed one-
 
 `npm run release:check` validates the source allowlist, package versions, common credential patterns and pinned CI actions. Tag releases run the full CI gates before publishing a checksum-verified source archive. Community [pilot instructions](docs/PILOT.md) and issue forms collect voluntary feedback; no independent user pilot or security audit is claimed.
 
-[Deploy a free disposable demo](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fshadow2028-blip%2Frepropack) · [Private installation](docs/DEPLOY.md)
+[Deploy a free disposable demo](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fnexora-studio-tr%2Frepropack) · [Private installation](docs/DEPLOY.md)
 
 ## Installation and shareable demo — alpha 0.5
 
