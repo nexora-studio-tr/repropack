@@ -20,7 +20,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
-          node-version: 24.15.0
+          node-version: ${{ runner.os == 'Windows' && '24.22.1' || '24.15.0' }}
           cache: npm
       - run: npm ci
       - if: runner.os != 'Windows'
