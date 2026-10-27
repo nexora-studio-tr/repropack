@@ -15,6 +15,12 @@ export async function checkRelease(root) {
   const meta = JSON.parse(await readFile(join(root, 'package.json'), 'utf8')), lock = JSON.parse(await readFile(join(root, 'package-lock.json'), 'utf8'));
   if (meta.version !== lock.version || meta.version !== lock.packages[''].version) throw new Error('Package/lockfile versions differ');
   const paths = await releaseFiles(root), manifest = [], failures = [];
+  const dockerfile = await readFile(join(root, 'Dockerfile'), 'utf8');
+  if (dockerfile.match(/org\.opencontainers\.image\.version="([^"]+)"/u)?.[1] !== meta.version) failures.push('Dockerfile: image version differs from package');
+  for (const file of ['compose.yaml', 'compose.demo.yaml']) {
+    const content = await readFile(join(root, file), 'utf8');
+    if (content.match(/image:\s*repropack:([^\s"']+)/u)?.[1] !== meta.version) failures.push(file + ': image version differs from package');
+  }
   for (const path of paths) {
     if (/(?:^|\/)(?:node_modules|artifacts|dist|\.git|\.repropack|discord-security-bot|hunt-core-pro)(?:\/|$)/u.test(path) || (/(?:^|\/)\.env/u.test(path) && path !== '.env.example')) failures.push(path + ': private/runtime path');
     const bytes = await sourceBytes(root, path), content = bytes.toString('utf8');
