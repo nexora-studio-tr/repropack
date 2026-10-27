@@ -1,6 +1,14 @@
 # ReproPack
 
+**[0.6.0-alpha.2](https://github.com/nexora-studio-tr/repropack/releases/tag/v0.6.0-alpha.2)**, [kalan adımların silme kanıtlarını](docs/DELETION-EVIDENCE.md), gerçek deneme bağlantılarını ve kısmi rapor indirmeyi ekler. Ek tekrar denemesi çalışmaz.
+
+[![CI](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml)
+
 Ücretsiz, MIT lisanslı açık kaynak alfa. Yerel kurulumda güvenilir uygulama kodu kullanılır; genel demo geçici ve sentetiktir. Ödeme, abonelik ve otomatik telemetri içermez.
+
+**[Canlı demoyu aç →](https://repropack-demo-4rq9.onrender.com/)** · Kayıt gerektirmez · Yalnızca örnek veri.
+
+Ücretsiz sunucu boşta kaldığında uyuyabilir; ilk açılış yaklaşık bir dakika sürebilir. Demo çalışma alanları 60 dakika sonra ve servis yeniden başladığında sıfırlanır.
 
 ## Hesap kurtarma ve yayın kontrolleri — alfa 0.6
 
@@ -8,7 +16,7 @@
 
 `npm run release:check` yalnızca yayınlanacak kaynakları denetler. CI eylemleri tam commit kimliğine sabitlenmiştir; etiket yayını CI kontrollerini geçmeden sürüm arşivi yayımlamaz. [Gönüllü pilot yönergesi](docs/PILOT.md) ve GitHub geri bildirim formları hazırdır; bağımsız güvenlik denetimi veya gerçek kullanıcı pilotu yapılmış sayılmaz.
 
-[Ücretsiz geçici demo kur](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fshadow2028-blip%2Frepropack) · [Yerel kurulum](docs/DEPLOY.md)
+[Ücretsiz geçici demo kur](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fnexora-studio-tr%2Frepropack) · [Yerel kurulum](docs/DEPLOY.md)
 
 **Daha az gürültü. Aynı hata.** Tekrarlanabilir bir HTTP senaryosunu, aynı hatayı koruyarak küçültür.
 

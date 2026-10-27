@@ -13,10 +13,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24.15.0
           cache: npm
@@ -28,4 +28,9 @@ jobs:
       - name: Publish the verified alpha archive
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" artifacts/release/*.tgz artifacts/release/*.sha256 --verify-tag --prerelease --title "ReproPack $GITHUB_REF_NAME" --notes-file docs/RELEASE-NOTES.md
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --json tagName >/dev/null 2>&1; then
+            echo "Release already exists; preserving its uploaded assets and notes."
+          else
+            gh release create "$GITHUB_REF_NAME" artifacts/release/*.tgz artifacts/release/*.sha256 --verify-tag --prerelease --title "ReproPack $GITHUB_REF_NAME" --notes-file docs/RELEASE-NOTES.md
+          fi

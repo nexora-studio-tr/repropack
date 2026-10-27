@@ -34,12 +34,17 @@ export function tarEntry(path, content) {
   const sum = header.reduce((total, value) => total + value, 0); header.write(sum.toString(8).padStart(6, '0') + '\0 ', 148, 8);
   return Buffer.concat([header, content, Buffer.alloc((512 - content.length % 512) % 512)]);
 }
+export async function sourceBytes(root, path) {
+  const raw = await readFile(join(root, path)), text = raw.toString('utf8');
+  if (raw.length > 2_097_152 || text.includes('\0') || !Buffer.from(text, 'utf8').equals(raw)) throw new Error('Source must be bounded UTF-8 text: ' + path);
+  return Buffer.from(text.replaceAll('\r\n', '\n'), 'utf8');
+}
 export async function packageRelease(root, output = join(root, 'artifacts', 'release')) {
   const meta = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
   if (meta.name !== 'repropack' || !/^\d+\.\d+\.\d+-alpha\.\d+$/u.test(meta.version)) throw new Error('Unexpected release identity');
   const prefix = `repropack-${meta.version}`, entries = [], manifest = [];
   for (const path of await releaseFiles(root)) {
-    const content = await readFile(join(root, path));
+    const content = await sourceBytes(root, path);
     manifest.push({ path, bytes: content.length, sha256: createHash('sha256').update(content).digest('hex') });
     entries.push(tarEntry(`${prefix}/${path}`, content));
   }

@@ -1,4 +1,12 @@
-# Installation, release and demo / Kurulum, yayın ve demo — alpha 0.5
+# Installation, release and demo / Kurulum, yayın ve demo — alpha 0.6
+
+## Live demo / Canlı demo
+
+[Open ReproPack](https://repropack-demo-4rq9.onrender.com/) runs the restricted synthetic demo on Render Free over HTTPS. No sign-up is required. Visitors have separate temporary workspaces; private accounts, PostgreSQL applications and uploaded scenarios are disabled. The real 16 → 5 reduction, three fresh fix trials, exports and visitor isolation have been validated over public HTTPS.
+
+The free service can sleep when idle and needs time to wake up. Demo sessions last up to 60 minutes and are lost on service restarts. See [Render Free limits](https://render.com/docs/free). This public demo is separate from the persistent private installation below.
+
+[Canlı ReproPack demosu](https://repropack-demo-4rq9.onrender.com/) Render Free üzerinde HTTPS ile çalışır. Kayıt gerekmez; her ziyaretçinin ayrı, geçici çalışma alanı vardır. Ücretsiz sunucu uyuyabilir ve ilk açılış gecikebilir. Oturumlar 60 dakika sonra veya servis yeniden başladığında sıfırlanır. Özel kullanıcı/ekip yönetimi ve PostgreSQL uygulamaları yerel kuruluma aittir.
 
 ## Private installation
 

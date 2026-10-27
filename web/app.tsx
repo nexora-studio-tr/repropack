@@ -7,6 +7,7 @@ import { AccessGate, AccountPanel, IdentityBar, loadingText } from './identity.t
 import { AccountLinkPage, EmailVerificationGate } from './security.tsx';
 import type { AccountLink } from './security.tsx';
 import { DemoBar, DemoWelcome } from './demo.tsx';
+import { DeletionEvidence } from './witnesses.tsx';
 import './app.css';
 
 const words = {
@@ -177,7 +178,7 @@ function Workbench({ session, language, setLanguage, onReady }: { session: Sessi
           <span className="history-bottom">{item.originalSteps}{item.reducedSteps !== null ? ` → ${item.reducedSteps}` : ''} · {new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-GB', { hour: '2-digit', minute: '2-digit' }).format(new Date(item.createdAt))}</span>
         </button>) : <p className="empty-history">{t.noHistory}</p>}
       </nav>
-      <div className="sidebar-footer"><span className="local-dot" /> {session.demo ? 'SAMPLE WORKSPACE' : 'LOCAL ENGINE'}<span className="local-description">{session.demo ? (language === 'tr' ? 'Geçici örnek veri. Diğer ziyaretçilerden ayrı.' : 'Temporary sample data. Separate from other visitors.') : t.localNote}</span><code>v0.5.0-alpha.1</code></div>
+      <div className="sidebar-footer"><span className="local-dot" /> {session.demo ? 'SAMPLE WORKSPACE' : 'LOCAL ENGINE'}<span className="local-description">{session.demo ? (language === 'tr' ? 'Geçici örnek veri. Diğer ziyaretçilerden ayrı.' : 'Temporary sample data. Separate from other visitors.') : t.localNote}</span><code>v{__REPROPACK_VERSION__}</code></div>
     </aside>
     <main id="main" className="main">
       <header className="topbar"><span>{t.workspace}</span><div className="topbar-right"><span className="alpha-label">{session.demo ? "DEMO" : t.local}</span><div className="language" aria-label="Language">{(['en', 'tr'] as const).map(lang => <button key={lang} aria-pressed={language === lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div></div></header>
@@ -209,11 +210,12 @@ function Workbench({ session, language, setLanguage, onReady }: { session: Sessi
           {report && <div className={`verification-note ${report.finalVerified ? 'good' : ''}`}><strong>{report.finalVerified ? t.preserved : t.status[report.status]}</strong><p>{report.oneMinimal ? t.minimal : report.finalVerified ? t.uncertain : report.reason}</p></div>}
           {postgres && executionMode && <div className="snapshot-evidence"><strong>{t.execution}</strong><p>{executionMode === 'docker' ? t.dockerMode : t.nativeMode}</p><small>{executionMode === 'docker' ? t.dockerNote : t.nativeNote}</small>{run?.environment?.execution?.kind === 'docker' && <p>{run.environment.execution.quotas.memoryMiB} MiB · {run.environment.execution.quotas.cpus} CPU · {run.environment.execution.quotas.pids} PID · {run.environment.execution.quotas.wallMs / 1000} s</p>}</div>}
           {run?.environment?.snapshotSha256 && <div className="snapshot-evidence"><strong>{t.snapshot}</strong><p>{run.environment.totalRows} {t.rows} · {run.environment.redactedCells} {t.masked}</p>{Object.entries(run.environment.rowCounts ?? {}).map(([table, count]) => <p key={table}><code>{table}</code><span>{count}</span></p>)}<code className="snapshot-hash">SHA-256 / {run.environment.snapshotSha256}</code></div>}
-          {exportable && run && <div className="export-actions"><a className="button secondary" href={`/api/runs/${run.id}/capsule`}>{t.export}<span aria-hidden="true">↓</span></a><a className="text-link" href={`/api/runs/${run.id}/report`}>{t.evidence} ↗</a></div>}
+          {report && run && <div className="export-actions">{exportable && <a className="button secondary" href={`/api/runs/${run.id}/capsule`}>{t.export}<span aria-hidden="true">↓</span></a>}<a className="text-link" href={`/api/runs/${run.id}/report`}>{t.evidence} ↗</a></div>}
           {exportable && run?.fixAvailable !== false && <div className="fix-check"><button className="button dark" disabled={!writable || verifying} onClick={() => { void verify(); }}>{verifying ? t.verifying : postgres ? t.postgresFix : t.verify}<span aria-hidden="true">↗</span></button><p>{postgres ? t.postgresFixNote : t.fixNote}</p>{run?.verification && <p className={run.verification.passed ? 'success-text' : 'error-text'} role="status">{run.verification.passed ? postgres ? t.postgresFixPassed : t.fixPassed : t.fixFailed}</p>}</div>}
           {run?.error && <p className="error-text" role="alert">{run.error}</p>}
         </aside>
       </div>
+      {report && <DeletionEvidence report={report} language={language} />}
       <section className="evidence-panel"><div className="evidence-heading"><div><p className="eyebrow">{t.engine}</p><h2>{t.observations}</h2></div><span className="subtle mono">{t.latest}</span></div>
         {events.length ? <div className="table-scroll"><table><thead><tr><th>{t.trial}</th><th>{t.phase}</th><th>{t.size}</th><th>{t.verdict}</th><th><span className="sr-only">{t.details}</span></th></tr></thead><tbody>{events.slice(-10).reverse().map(event => <tr key={event.trial}><td className="mono">{event.trial.toString().padStart(3, '0')}</td><td>{t.phases[event.phase as keyof typeof t.phases] ?? event.phase}</td><td className="mono">{event.stepIds.length}</td><td><span className={`verdict ${event.verdict}`}>{t.verdicts[event.verdict]}</span></td><td><details className="trial-detail"><summary>{t.details} +</summary><div><p>{event.reason}</p><code>{event.stepIds.join(' → ')}</code><p>{event.durationMs} ms</p></div></details></td></tr>)}</tbody></table></div> : <div className="empty-evidence"><span aria-hidden="true">[ · · · ]</span><p>{t.empty}</p></div>}
       </section>

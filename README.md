@@ -1,10 +1,18 @@
 # ReproPack
 
+**[0.6.0-alpha.2](https://github.com/nexora-studio-tr/repropack/releases/tag/v0.6.0-alpha.2)** adds [retained-step deletion evidence](docs/DELETION-EVIDENCE.md), linked fresh trials and explicit partial reports. No extra replays are added.
+
 **Less noise. Same failure.** Reduce a reproducible HTTP scenario while preserving its exact failure signature.
+
+[![CI](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml)
 
 [Türkçe](README.tr.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Roadmap / status](docs/ROADMAP.md)
 
 Free, MIT-licensed open source. **Alpha: install locally with trusted application code.** The public demo is a disposable synthetic example. No billing, subscriptions or automatic telemetry.
+
+**[Try the live demo →](https://repropack-demo-4rq9.onrender.com/)** · No sign-up · Synthetic data only.
+
+The free instance can sleep when idle, so the first load may take about a minute. Demo workspaces expire after 60 minutes and reset on service restarts.
 
 ## Account recovery and release controls — alpha 0.6
 
@@ -12,7 +20,7 @@ Optional SMTP email verification and password recovery use expiring, hashed one-
 
 `npm run release:check` validates the source allowlist, package versions, common credential patterns and pinned CI actions. Tag releases run the full CI gates before publishing a checksum-verified source archive. Community [pilot instructions](docs/PILOT.md) and issue forms collect voluntary feedback; no independent user pilot or security audit is claimed.
 
-[Deploy a free disposable demo](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fshadow2028-blip%2Frepropack) · [Private installation](docs/DEPLOY.md)
+[Deploy a free disposable demo](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fnexora-studio-tr%2Frepropack) · [Private installation](docs/DEPLOY.md)
 
 ## Installation and shareable demo — alpha 0.5
 
@@ -24,7 +32,7 @@ The private workbench requires sign-in. First setup uses the private `.repropack
 
 ## Isolation and recovery — alpha 0.3
 
-An explicit Docker execution mode, hard workload quotas, ownership journals and independent cleanup supervisors are included. Native Windows crash recovery and the **real Linux Docker gate on Windows/WSL 2** pass, including kernel OOM/PID limits, external-network exclusion and parent-crash cleanup. Default native execution still requires trusted code. See [setup, limits and validation evidence / Türkçe](docs/SANDBOX.md). Remote GitHub CI and permanent managed deployment have not been performed; alpha 0.5 adds a separate disposable public preview.
+An explicit Docker execution mode, hard workload quotas, ownership journals and independent cleanup supervisors are included. Native Windows crash recovery and the **real Linux Docker gate on Windows/WSL 2** pass, including kernel OOM/PID limits, external-network exclusion and parent-crash cleanup. Default native execution still requires trusted code. See [setup, limits and validation evidence / Türkçe](docs/SANDBOX.md). GitHub Actions validates Windows/Linux, browser flows, Docker isolation and deployment. Permanent managed hosting remains optional; alpha 0.5 includes a separate disposable public preview.
 
 ## PostgreSQL applications — alpha 0.2
 

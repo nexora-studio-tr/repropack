@@ -1,8 +1,10 @@
 import { build } from 'esbuild';
-import { mkdir, copyFile } from 'node:fs/promises';
+import { mkdir, copyFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
+const { version } = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+if (typeof version !== 'string' || !version) throw new Error('A package version is required to build the interface');
 await mkdir(new URL('../dist/', import.meta.url), { recursive: true });
-await build({ absWorkingDir: root, entryPoints: ['web/app.tsx'], bundle: true, outdir: 'dist', minify: true, sourcemap: false, target: ['es2022'], define: { 'process.env.NODE_ENV': '"production"' }, jsx: 'automatic' });
+await build({ absWorkingDir: root, entryPoints: ['web/app.tsx'], bundle: true, outdir: 'dist', minify: true, sourcemap: false, target: ['es2022'], define: { 'process.env.NODE_ENV': '"production"', __REPROPACK_VERSION__: JSON.stringify(version) }, jsx: 'automatic' });
 for (const file of ['index.html', 'favicon.svg']) await copyFile(new URL(`../web/${file}`, import.meta.url), new URL(`../dist/${file}`, import.meta.url));
 console.log('Built local React workbench.');

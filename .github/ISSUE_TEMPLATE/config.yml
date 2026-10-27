@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Private security report / Özel güvenlik bildirimi
-    url: https://github.com/shadow2028-blip/repropack/security/advisories/new
+    url: https://github.com/nexora-studio-tr/repropack/security/advisories/new
     about: See SECURITY.md; never disclose an exploitable vulnerability in a public issue.

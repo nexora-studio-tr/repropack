@@ -1,6 +1,6 @@
 # Source publication / Kaynak yayını
 
-The repository target is `shadow2028-blip/repropack`, public and MIT licensed. Only ReproPack's explicit source allowlist may be uploaded. Do not initialize, stage or push the surrounding multi-project workspace.
+The repository target is `nexora-studio-tr/repropack`, public and MIT licensed. Only ReproPack's explicit source allowlist may be uploaded. Do not initialize, stage or push the surrounding multi-project workspace.
 
 ## Prepare and verify
 
