@@ -9,7 +9,7 @@ RUN npm run build && npm prune --omit=dev && npm cache clean --force
 FROM node:24.15.0-bookworm-slim AS runtime
 WORKDIR /opt/repropack
 ENV NODE_ENV=production REPROPACK_PORT=4317 REPROPACK_LISTEN_HOST=0.0.0.0 REPROPACK_DATA_DIR=/var/lib/repropack
-LABEL org.opencontainers.image.title="ReproPack" org.opencontainers.image.version="0.6.0-alpha.1"
+LABEL org.opencontainers.image.title="ReproPack" org.opencontainers.image.version="0.6.0-alpha.2"
 RUN groupadd --gid 10001 repropack && useradd --uid 10001 --gid 10001 --no-create-home repropack \
     && mkdir -p /var/lib/repropack && chown 10001:10001 /var/lib/repropack
 COPY --from=build /opt/repropack/node_modules ./node_modules
