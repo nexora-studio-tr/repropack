@@ -1,5 +1,7 @@
 # ReproPack
 
+**[0.6.0-alpha.2](https://github.com/nexora-studio-tr/repropack/releases/tag/v0.6.0-alpha.2)** adds [retained-step deletion evidence](docs/DELETION-EVIDENCE.md), linked fresh trials and explicit partial reports. No extra replays are added.
+
 **Less noise. Same failure.** Reduce a reproducible HTTP scenario while preserving its exact failure signature.
 
 [![CI](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml)

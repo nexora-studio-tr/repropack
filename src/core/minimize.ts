@@ -2,7 +2,13 @@ import type { Json, Step } from './model.ts';
 
 export type Verdict = 'fail' | 'pass' | 'unresolved';
 export interface TrialResult { verdict: Verdict; reason: string; observation?: Json }
-export interface TrialEvent { trial: number; phase: string; stepIds: string[]; verdict: Verdict; reason: string; durationMs: number }
+export interface TrialEvent { trial: number; phase: string; stepIds: string[]; verdict: Verdict; reason: string; durationMs: number; omittedStepId?: string }
+export interface DeletionWitness {
+  stepId: string;
+  status: 'anchor' | 'necessary' | 'unresolved' | 'removable' | 'unchecked';
+  trialNumbers: number[];
+  outcomes: Verdict[];
+}
 export interface Reduction {
   status: 'completed' | 'budget_exhausted' | 'inconclusive' | 'cancelled';
   reason: string;
@@ -19,6 +25,8 @@ export interface Reduction {
   unresolvedDeletions: number;
   limits: { maxTrials: number; timeoutMs: number };
   events: TrialEvent[];
+  /** Optional for stored evidence from earlier releases. New reductions always include it. */
+  deletionWitnesses?: DeletionWitness[];
 }
 export interface Options {
   anchorId: string;
@@ -43,6 +51,8 @@ export async function minimize(steps: Step[], execute: Executor, options: Option
   let current = [...steps];
   let trials = 0, cacheHits = 0, baselineVerified = false, finalVerified = false, oneMinimal = false, unresolvedDeletions = 0;
   const events: TrialEvent[] = [];
+  const witnesses = new Map<string, DeletionWitness>();
+  let checking: string | undefined;
   const guard = () => {
     if (options.signal?.aborted) throw options.signal.reason;
     if (deadline.aborted || trials >= maxTrials) throw new BudgetStop('Trial or time budget exhausted');
@@ -52,8 +62,12 @@ export async function minimize(steps: Step[], execute: Executor, options: Option
     const start = performance.now();
     const result = await execute(candidate, signal);
     trials++;
-    const event: TrialEvent = { trial: trials, phase, stepIds: candidate.map(step => step.id), verdict: result.verdict, reason: result.reason, durationMs: Math.round(performance.now() - start) };
+    const event: TrialEvent = { trial: trials, phase, stepIds: candidate.map(step => step.id), verdict: result.verdict, reason: result.reason, durationMs: Math.round(performance.now() - start), ...(phase === 'minimality' && checking !== undefined ? { omittedStepId: checking } : {}) };
     events.push(event);
+    if (event.omittedStepId !== undefined) {
+      const witness = witnesses.get(event.omittedStepId)!;
+      witness.trialNumbers.push(event.trial); witness.outcomes.push(event.verdict);
+    }
     options.onEvent?.(event);
     if (options.signal?.aborted) throw options.signal.reason;
     if (deadline.aborted) throw new BudgetStop('Time budget exhausted');
@@ -78,6 +92,11 @@ export async function minimize(steps: Step[], execute: Executor, options: Option
     originalSteps: steps.length, reducedSteps: current.length, trials, cacheHits,
     durationMs: Math.round(performance.now() - started), baselineVerified, finalVerified,
     oneMinimal, unresolvedDeletions, limits: { maxTrials, timeoutMs }, events,
+    deletionWitnesses: current.map(step => {
+      const witness = witnesses.get(step.id);
+      return witness ? { ...witness, trialNumbers: [...witness.trialNumbers], outcomes: [...witness.outcomes] }
+        : { stepId: step.id, status: step.id === options.anchorId ? 'anchor' : 'unchecked', trialNumbers: [], outcomes: [] };
+    }),
   });
   try {
     if (await repeated(current, 'baseline', 3) !== 'fail') return report('inconclusive', 'The baseline did not reproduce the exact failure in all three trials.');
@@ -106,13 +125,17 @@ export async function minimize(steps: Step[], execute: Executor, options: Option
     // Certification is deliberately stricter than reduction: unresolved deletions are not proofs of necessity.
     for (const step of current) {
       if (step.id === options.anchorId) continue;
+      checking = step.id;
+      const witness: DeletionWitness = { stepId: step.id, status: 'unchecked', trialNumbers: [], outcomes: [] };
+      witnesses.set(step.id, witness);
       const verdict = await repeated(current.filter(item => item.id !== step.id), 'minimality');
+      witness.status = verdict === 'pass' ? 'necessary' : verdict === 'fail' ? 'removable' : 'unresolved';
       if (verdict === 'fail') return report('inconclusive', 'A fresh deletion reproduced the failure; the oracle changed during reduction.');
       if (verdict === 'unresolved') unresolvedDeletions++;
     }
     oneMinimal = unresolvedDeletions === 0;
     return report('completed', oneMinimal
-      ? 'Failure preserved. Every single-step deletion was checked; this is 1-minimal, not necessarily globally smallest.'
+      ? 'Failure preserved. Every permitted single-step deletion was checked; this is anchored 1-minimal, not necessarily globally smallest.'
       : 'Failure preserved. Some deletions made the replay invalid or uncertain, so minimality is not certified.');
   } catch (error) {
     if (options.signal?.aborted) return report('cancelled', 'Cancelled by the user. Partial output is not certified.');

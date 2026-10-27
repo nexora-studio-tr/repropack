@@ -1,5 +1,7 @@
 # Status and roadmap / Durum ve yol haritası
 
+Alpha 0.6.0-alpha.2 adds [retained-step evidence](DELETION-EVIDENCE.md), fresh deletion-trial references and partial evidence downloads. Existing PostgreSQL snapshot lifetime limits and external pilot gates remain unchanged. Exact validation belongs to the release attachments and Actions run.
+
 The project is an independent ReproPack product. A general-purpose Claude Code/Codex plugin is separate and has not been specified or implemented here.
 
 | Stage | Deliverable | State |

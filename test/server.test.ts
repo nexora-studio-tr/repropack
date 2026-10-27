@@ -46,6 +46,24 @@ test('HTTP API persists a run, exports replayable evidence and verifies only the
     const history = await app.client.request('/api/runs'); assert.equal((await history.json() as unknown[]).length, 1);
   } finally { await app.close(); }
 });
+test('partial evidence can be inspected and exported while incomplete capsules stay locked', async () => {
+  const app = await fixture();
+  try {
+    const started = await app.client.request('/api/runs', { capsule: await example(), maxTrials: 6 });
+    assert.equal(started.status, 202); const { id } = await started.json() as { id: string };
+    const run = await finished(app.client, id);
+    assert.equal(run.status, 'budget_exhausted');
+    assert.equal((await app.client.request(`/api/runs/${id}/capsule`)).status, 409);
+    const evidence = await app.client.request(`/api/runs/${id}/report`);
+    assert.equal(evidence.status, 200); assert.match(evidence.headers.get('content-disposition') ?? '', /attachment/u);
+    const report = await evidence.json() as NonNullable<Run['report']>;
+    assert.equal(report.status, 'budget_exhausted'); assert.equal(report.oneMinimal, false);
+    assert.deepEqual(report.deletionWitnesses?.map(w => w.stepId), report.reducedStepIds);
+    assert.ok(report.deletionWitnesses?.every(w => w.status === 'anchor' || (w.status === 'unchecked' && w.trialNumbers.length === 0)));
+    assert.equal((await fetch(`${app.origin}/api/runs/${id}/report`, { headers: localHeaders(app.origin) })).status, 401);
+  } finally { await app.close(); }
+});
+
 test('same-origin writes are required; invalid requests cannot create work', async () => {
   const app = await fixture();
   try {

@@ -1,16 +1,11 @@
-# ReproPack 0.6.0-alpha.1
+# ReproPack 0.6.0-alpha.2
 
-Free, MIT-licensed open-source alpha. No billing or subscriptions.
+Explain why each retained step remains, using existing fresh deletion trials without extra replays. The English/Turkish workbench and evidence JSON distinguish observed necessity, unresolved deletion, changed-oracle failure, incomplete certification and the protected anchor. Actual trial IDs and outcomes are preserved.
 
-- Ordered failure-preserving HTTP reduction, real PostgreSQL fixtures and optional explicit Docker isolation.
-- Authenticated team workspaces, roles, one-use invitations and scoped audit history.
-- Optional SMTP email verification and password recovery with hashed one-use links, expiry, bounded delivery and revocation.
-- English/Turkish account security screens and meaningful HTTP, SMTP and browser validation.
-- Source-only release checks, SHA-pinned CI actions, a CI-gated prerelease workflow and community feedback forms.
-- Disposable synthetic demo, Free Render Blueprint, private Compose installation and SQLite backup/restore.
+Partial reports can be downloaded with their real status and certification flags. A partial report never unlocks a reproduction capsule. Old reports show a missing-witness notice. Team isolation, budgets, fixed-failure signatures, fresh replay verification and application boundaries are preserved.
 
-This is an alpha with explicit limits, not a hostile-code hosting service. Native applications must be trusted. Free demo storage is temporary. SMTP is operator configured. See SECURITY.md and docs/ROADMAP.md for unsupported features. Automated checks do not constitute an independent audit or real-user pilot.
+Source releases normalize UTF-8 line endings, include SHA-256 manifests and have a clean-source install/build/synthetic-demo gate. The existing actual PostgreSQL, Docker isolation, deployment and identity/browser gates remain separate checks. Check the exact published CI run and release validation.
 
-## Türkçe
+Free MIT alpha. No billing, paid services or hostile-code hosting. PostgreSQL snapshots remain bound to the running registry; durable replay after restart is still a separate roadmap gate.
 
-Ücretsiz ve MIT lisanslı açık kaynak alfa; ödeme veya abonelik içermez. Tek kullanımlık e-posta doğrulaması/parola kurtarma, Türkçe/İngilizce arayüzler, kaynak paketini denetleyen yayın kontrolleri, sabitlenmiş CI eylemleri ve geri bildirim formları eklenmiştir. Yerel kurulum ve sentetik genel demo ayrıdır. SMTP kurulumu isteğe bağlıdır; güvenlik ve doğrulama sınırları ilgili belgelerde açıklanır.
+Türkçe: Kalan adımların neden tutulduğu, gerçek taze silme denemelerine bağlanır. Sabit hata ölçütü silinmez; belirsiz ve yarım kontroller gereklilik kanıtı sayılmaz. Kısmi Kanıt JSON indirilebilir, kapsül indirme kilidi korunur. Ek tekrar denemesi veya ücretli servis eklenmez. Ayrıntılar: [kanıt rehberi](DELETION-EVIDENCE.md).

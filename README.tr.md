@@ -1,5 +1,7 @@
 # ReproPack
 
+**[0.6.0-alpha.2](https://github.com/nexora-studio-tr/repropack/releases/tag/v0.6.0-alpha.2)**, [kalan adımların silme kanıtlarını](docs/DELETION-EVIDENCE.md), gerçek deneme bağlantılarını ve kısmi rapor indirmeyi ekler. Ek tekrar denemesi çalışmaz.
+
 [![CI](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nexora-studio-tr/repropack/actions/workflows/ci.yml)
 
 Ücretsiz, MIT lisanslı açık kaynak alfa. Yerel kurulumda güvenilir uygulama kodu kullanılır; genel demo geçici ve sentetiktir. Ödeme, abonelik ve otomatik telemetri içermez.

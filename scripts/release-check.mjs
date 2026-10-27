@@ -2,7 +2,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { releaseFiles } from './package-release.mjs';
+import { releaseFiles, sourceBytes } from './package-release.mjs';
 const secretRules = [
   ['private key', /-----BEGIN (?:[A-Z0-9]+ )?PRIVATE KEY-----/u],
   ['GitHub token', /\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,})\b/u],
@@ -17,7 +17,7 @@ export async function checkRelease(root) {
   const paths = await releaseFiles(root), manifest = [], failures = [];
   for (const path of paths) {
     if (/(?:^|\/)(?:node_modules|artifacts|dist|\.git|\.repropack|discord-security-bot|hunt-core-pro)(?:\/|$)/u.test(path) || (/(?:^|\/)\.env/u.test(path) && path !== '.env.example')) failures.push(path + ': private/runtime path');
-    const bytes = await readFile(join(root, path)), content = bytes.toString('utf8');
+    const bytes = await sourceBytes(root, path), content = bytes.toString('utf8');
     for (const [label, pattern] of secretRules) if (pattern.test(content)) failures.push(path + ': ' + label);
     if (path.startsWith('.github/workflows/')) for (const match of content.matchAll(/^\s*-?\s*uses:\s*(\S+)/gmu)) if (!match[1].startsWith('./') && !/^[\w.-]+\/[\w./-]+@[a-f0-9]{40}$/u.test(match[1])) failures.push(path + ': action must be pinned to a full commit SHA');
     manifest.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });

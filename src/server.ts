@@ -165,7 +165,8 @@ export async function createApp(dataDirectory: string, options: { applicationCon
         if (!run) throw new HttpError(404, 'Run not found');
         if (method === 'GET' && !operation) { json(200, run); return; }
         if (method === 'GET' && (operation === 'capsule' || operation === 'report')) {
-          if (!run.report?.finalVerified || run.report.status !== 'completed') throw new HttpError(409, 'Only completed, freshly verified reductions can be exported');
+          if (!run.report) throw new HttpError(409, 'Reduction evidence is not ready');
+          if (operation === 'capsule' && (!run.report.finalVerified || run.report.status !== 'completed')) throw new HttpError(409, 'Only completed, freshly verified reductions can be exported as capsules');
           res.setHeader('content-disposition', `attachment; filename="repropack-${operation}-${id}.json"`);
           identity.event(person!.teamId, person!.userId, 'run.exported', id, { format: operation });
           json(200, operation === 'report' ? { ...run.report, environment: run.environment ?? null, verification: run.verification ?? null } : { ...run.source, steps: run.source.steps.filter(step => run.report!.reducedStepIds.includes(step.id)) }); return;

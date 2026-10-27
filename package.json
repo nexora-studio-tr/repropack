@@ -1,6 +1,6 @@
 {
   "name": "repropack",
-  "version": "0.6.0-alpha.1",
+  "version": "0.6.0-alpha.2",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -27,7 +27,8 @@
     "validate:deployment": "node scripts/validate-deployment.mjs",
     "image:build": "node scripts/build-image.mjs",
     "release:check": "node scripts/release-check.mjs",
-    "release:prepare": "node scripts/prepare-github.mjs"
+    "release:prepare": "node scripts/prepare-github.mjs",
+    "test:release": "node scripts/validate-release.mjs"
   },
   "dependencies": {
     "embedded-postgres": "18.4.0-beta.17",
