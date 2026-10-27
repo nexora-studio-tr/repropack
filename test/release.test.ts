@@ -5,6 +5,19 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
+
+test('source packages normalize line endings and reject binary or invalid UTF-8 input', async () => {
+  const { sourceBytes } = await import(new URL('../scripts/package-release.mjs', import.meta.url).href);
+  const directory = await mkdtemp(join(tmpdir(), 'repropack-source-bytes-'));
+  try {
+    await writeFile(join(directory, 'source.ts'), 'one\r\ntwo\r\n');
+    assert.equal((await sourceBytes(directory, 'source.ts')).toString(), 'one\ntwo\n');
+    await writeFile(join(directory, 'source.ts'), Buffer.from([0xff]));
+    await assert.rejects(sourceBytes(directory, 'source.ts'), /bounded UTF-8/u);
+    await writeFile(join(directory, 'source.ts'), 'binary\0content');
+    await assert.rejects(sourceBytes(directory, 'source.ts'), /bounded UTF-8/u);
+  } finally { await rm(directory, { recursive: true, force: true }); }
+});
 test('publication preflight rejects exposed keys and unpinned actions without reading runtime or sibling code', async () => {
   const { checkRelease } = await import(new URL('../scripts/release-check.mjs', import.meta.url).href);
   const { releaseFiles } = await import(new URL('../scripts/package-release.mjs', import.meta.url).href);

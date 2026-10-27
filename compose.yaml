@@ -2,7 +2,7 @@ name: repropack
 services:
   app:
     build: .
-    image: repropack:0.6.0-alpha.1
+    image: repropack:0.6.0-alpha.2
     labels:
       io.repropack.deployment-owner: ${REPROPACK_DEPLOYMENT_OWNER:-operator}
     init: true
